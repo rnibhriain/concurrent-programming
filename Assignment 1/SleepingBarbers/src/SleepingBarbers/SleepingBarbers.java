@@ -1,10 +1,12 @@
 package SleepingBarbers;
 
 import java.util.concurrent.*;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class SleepingBarbers {
+	
+	LinkedList list;
 	
 	static int barbers;
 	static int chairs;
