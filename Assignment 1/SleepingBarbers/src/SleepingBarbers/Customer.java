@@ -10,18 +10,12 @@ public class Customer implements Runnable {
 	Customer ( int id ) {
 		this.id = id;
 	}
-	 
-	public void setTime ( Date time ) {
-		this.time = time;
-	}
-	
 	
 	public void run () {
 		getHaircut();
 	}
 	
 	private synchronized void getHaircut  () {
-		
 	}
 
 }
