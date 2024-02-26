@@ -1,7 +1,5 @@
 package SleepingBarbers;
 
-import java.util.Date;
-
 public class Customer implements Runnable {
 
 	private int id;
@@ -20,7 +18,7 @@ public class Customer implements Runnable {
 		getHaircut();
 	}
 
-	private synchronized void getHaircut  () {
+	private void getHaircut  () {
 		System.out.println( "Starting customer " + id );
 		
 		shop.addCust( this );

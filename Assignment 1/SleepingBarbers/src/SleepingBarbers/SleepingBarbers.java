@@ -8,8 +8,8 @@ public class SleepingBarbers {
 
 	static ArrayList <Customer> list;
 
-	public final static int numBarbers = 4;
-	public static int chairs = 10;
+	public final static int numBarbers = 3;
+	public static int chairs = 8;
 
 	public void cutHair ( int id, int md, int sdh ) {
 
@@ -42,7 +42,7 @@ public class SleepingBarbers {
 
 			// making sure length to cut hair has mean md and standard deviation sdh 
 			timeToCut = (long) (r.nextGaussian() * sdh + md);
-			TimeUnit.SECONDS.sleep(timeToCut);
+			TimeUnit.MILLISECONDS.sleep(timeToCut);
 		}
 		catch(InterruptedException ex)
 		{
@@ -58,7 +58,7 @@ public class SleepingBarbers {
 		System.out.println( "Customer " + customer.getId() + " is entering the shop");
 
 		synchronized ( list ) {
-			if ( list.size() == chairs ) {
+			if ( list.size() >= chairs ) {
 				System.out.println( "There are no free seats. Customer " + customer.getId() + " is leaving the shop");
 			} else {
 				

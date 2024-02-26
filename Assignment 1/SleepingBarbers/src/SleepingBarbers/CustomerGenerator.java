@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 public class CustomerGenerator implements Runnable {
 
 	// intervals for customer
-	int mc = 1000;
+	int mc = 500;
 	int sdc = 150;
 	
 	SleepingBarbers shop;
@@ -24,7 +24,7 @@ public class CustomerGenerator implements Runnable {
 			Random r = new Random(); 
 			// wait some time until next customer enters
 			try {
-				TimeUnit.SECONDS.sleep( (long) (r.nextGaussian() * sdc + mc) );
+				TimeUnit.MILLISECONDS.sleep( (long) (r.nextGaussian() * sdc + mc) );
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

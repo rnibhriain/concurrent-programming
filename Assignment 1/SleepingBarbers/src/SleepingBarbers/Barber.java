@@ -6,7 +6,7 @@ public class Barber implements Runnable {
 	SleepingBarbers shop;
 
 	// Cutting hair time
-	int mh = 2000;
+	int mh = 5000;
 	int sdh = 275;
 
 	Barber ( int id,  SleepingBarbers shop) {
