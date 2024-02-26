@@ -44,12 +44,27 @@ public class SleepingBarbers {
 			timeToCut = (long) (r.nextGaussian() * sdh + md);
 			TimeUnit.SECONDS.sleep(timeToCut);
 		}
-		catch(InterruptedException iex)
+		catch(InterruptedException ex)
 		{
-			iex.printStackTrace();
+			ex.printStackTrace();
 		}
 
 		System.out.println( "Customer " + customer.getId() + " had their hair cut in " + timeToCut + " seconds.");
+
+	}
+
+	public void addCust ( Customer customer ) {
+
+		System.out.println( "Customer " + customer.getId() + " is entering the shop");
+
+		synchronized ( list ) {
+			if ( list.size() == chairs ) {
+				System.out.println( "There are no free seats. Customer " + customer.getId() + " is leaving the shop");
+			} else {
+				list.add( customer );
+			}
+		}
+
 
 	}
 

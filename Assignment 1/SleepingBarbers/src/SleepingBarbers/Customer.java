@@ -22,6 +22,10 @@ public class Customer implements Runnable {
 
 	private synchronized void getHaircut  () {
 		System.out.println( "Starting customer " + id );
+		
+		shop.addCust( this );
+		
+		
 	}
 
 }
