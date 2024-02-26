@@ -8,7 +8,7 @@ public class SleepingBarbers {
 
 	static ArrayList <Customer> list;
 
-	public final static int barbers = 4;
+	public final static int numBarbers = 4;
 	public static int chairs = 10;
 
 	public void cutHair ( int id, int md, int sdh ) {
@@ -19,7 +19,7 @@ public class SleepingBarbers {
 
 		synchronized ( list ) {
 			while ( list.size() == 0 ) {
-				System.out.println( "Barber " + id + " is waiting for a customer" );
+				System.out.println( "Barber " + id + " is sleeping in his chair" );
 				try
 				{
 					// waiting for customer to be added
@@ -31,7 +31,7 @@ public class SleepingBarbers {
 				}
 			}
 			customer = list.remove( 0 );
-			System.out.println("Barber found customer " + customer.getId() + "  in the queue.");
+			System.out.println("Barber " + id + " found customer " + customer.getId() + " in the waiting room.");
 		}
 
 		long timeToCut = 0;
@@ -61,7 +61,16 @@ public class SleepingBarbers {
 			if ( list.size() == chairs ) {
 				System.out.println( "There are no free seats. Customer " + customer.getId() + " is leaving the shop");
 			} else {
+				
+				// presume all barbers are busy
 				list.add( customer );
+				System.out.println( "Customer " + customer.getId() + " is waiting in a chair" );
+				
+				// check if there are any waiting barbers
+				if ( list.size() == 1 ) {
+					list.notify();
+				}
+				
 			}
 		}
 
@@ -71,11 +80,37 @@ public class SleepingBarbers {
 	public static void main(String[] args) {		
 
 		list = new ArrayList<Customer>();
+		
+		SleepingBarbers shop = new SleepingBarbers();
 		//get number of CPUs available
 		int numCores = Runtime.getRuntime().availableProcessors();
 
 		System.out.println( "Number of cores available: " + numCores );
+		
+		// starting multicore fixed threads
+		final ExecutorService executor = Executors.newFixedThreadPool( numCores );
+		CustomerGenerator generator = new CustomerGenerator( shop );
+		
+		//creating barbers - in this case 4 barbers with 10 waiting chairs
+		Barber[] barbers = new Barber[ numBarbers ];
+		
+		for ( int i = 0; i < numBarbers; i++ ) {
+			barbers[ i ] = new Barber( i, shop );
+		}
+		
+		executor.execute(() -> {
+			for ( int i = 0; i < numBarbers; i++ ) {
+				Thread barberThread = new Thread( barbers[ i ] );
+				barberThread.start();
+			}
+			Thread generatorThread = new Thread( generator );
+			generatorThread.start();
+			
+		});
+		
+		executor.shutdown();
 
+		System.out.println( "Sleeping Barbershop has ShutDown............" );
 
 	}
 
