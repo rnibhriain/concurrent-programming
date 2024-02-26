@@ -8,14 +8,14 @@ public class SleepingBarbers {
 
 	static ArrayList <Customer> list;
 
-	public final static int numBarbers = 3;
+	public final static int numBarbers = 4;
 	public static int chairs = 8;
 
 	public void cutHair ( int id, int md, int sdh ) {
 
 		Customer customer;
 
-		System.out.println("Barber " + id + " waiting for lock.");
+		System.out.println("Barber " + id + " waiting to cut hair.");
 
 		synchronized ( list ) {
 			while ( list.size() == 0 ) {

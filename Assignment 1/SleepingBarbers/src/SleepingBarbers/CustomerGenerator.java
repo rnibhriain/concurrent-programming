@@ -18,6 +18,7 @@ public class CustomerGenerator implements Runnable {
 	public void run() {
 		int count = 0;
 		while ( true ) {
+			
 			Customer customer = new Customer( count++, shop );
 			Thread custThread = new Thread( ( Runnable ) customer );
 			custThread.start();
