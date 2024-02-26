@@ -4,11 +4,16 @@ import java.util.Date;
 
 public class Customer implements Runnable {
 	
-	int id;
-	Date time;
+	private int id;
+	SleepingBarbers shop;
 	
-	Customer ( int id ) {
+	Customer ( int id, SleepingBarbers shop ) {
 		this.id = id;
+		this.shop = shop;
+	}
+	
+	public int getId () {
+		return id;
 	}
 	
 	public void run () {
@@ -16,6 +21,7 @@ public class Customer implements Runnable {
 	}
 	
 	private synchronized void getHaircut  () {
+		
 	}
 
 }
