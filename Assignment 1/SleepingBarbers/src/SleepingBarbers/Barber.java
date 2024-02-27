@@ -2,7 +2,7 @@ package SleepingBarbers;
 
 public class Barber implements Runnable {
 
-	int id;
+	private int id;
 	SleepingBarbers shop;
 
 	// Cutting hair time
@@ -16,6 +16,7 @@ public class Barber implements Runnable {
 
 	public void run () {
 		System.out.println( "Starting Barber: " + id );
+		
 		while ( true ) {
 			shop.cutHair( id, mh, sdh );
 		}

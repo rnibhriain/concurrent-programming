@@ -15,11 +15,7 @@ public class Customer implements Runnable {
 	}
 
 	public void run () {
-		getHaircut();
-	}
-
-	private void getHaircut  () {
-		System.out.println( "Starting customer " + id );
+		System.out.println( "Starting Customer: " + id );
 		shop.addCust( this );
 	}
 
