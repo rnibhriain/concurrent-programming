@@ -6,12 +6,12 @@ import java.util.*;
 
 public class SleepingBarbers {
 
-	private static ArrayList <Customer> list;
+	private static ArrayList < Customer > list;
 
-	private final static int numBarbers = 4;
-	private final static int chairs = 8;
+	private static int numBarbers = 4;
+	private static int chairs = 8;
 
-	public void cutHair ( int id, int md, int sdh ) {
+	public void cutHair ( int id, int mh, int sdh ) {
 
 		Customer customer;
 
@@ -19,7 +19,9 @@ public class SleepingBarbers {
 
 		synchronized ( list ) {
 			while ( list.size() == 0 ) {
+				
 				System.out.println( "Barber " + id + " is sleeping in his chair" );
+				
 				try
 				{
 					// waiting for customer to be added
@@ -40,8 +42,8 @@ public class SleepingBarbers {
 		{    
 			Random r = new Random();
 
-			// making sure length to cut hair has mean md and standard deviation sdh 
-			timeToCut = ( long ) ( r.nextGaussian() * sdh + md );
+			// making sure length to cut hair has mean mh and standard deviation sdh 
+			timeToCut = ( long ) ( r.nextGaussian() * sdh + mh );
 			Thread.sleep( timeToCut );
 		}
 		catch(InterruptedException ex)
@@ -67,7 +69,7 @@ public class SleepingBarbers {
 				System.out.println( "Customer " + customer.getId() + " is waiting in a chair" );
 				
 				// check if there are any waiting barbers
-				if ( list.size() == 1 ) {
+				if ( list.size() >= 1 ) {
 					list.notify();
 				}
 				
@@ -102,6 +104,16 @@ public class SleepingBarbers {
 		});
 		
 		executor.shutdown();
+		
+		try {
+			if ( executor.awaitTermination( 1, TimeUnit.DAYS ) ) {
+			} else {
+			    executor.shutdownNow();
+			}
+		} catch ( InterruptedException ex ) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
 
 		System.out.println( "Sleeping Barbershop has ShutDown............" );
 
