@@ -20,10 +20,7 @@ public class Customer implements Runnable {
 
 	private void getHaircut  () {
 		System.out.println( "Starting customer " + id );
-		
 		shop.addCust( this );
-		
-		
 	}
 
 }

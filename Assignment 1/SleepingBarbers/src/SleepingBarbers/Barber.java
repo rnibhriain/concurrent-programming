@@ -9,7 +9,7 @@ public class Barber implements Runnable {
 	int mh = 5000;
 	int sdh = 275;
 
-	Barber ( int id,  SleepingBarbers shop) {
+	Barber ( int id,  SleepingBarbers shop ) {
 		this.id = id;
 		this.shop = shop;
 	}

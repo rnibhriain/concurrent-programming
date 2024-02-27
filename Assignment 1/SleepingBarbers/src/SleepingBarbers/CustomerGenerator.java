@@ -1,7 +1,6 @@
 package SleepingBarbers;
 
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class CustomerGenerator implements Runnable {
 
@@ -25,9 +24,9 @@ public class CustomerGenerator implements Runnable {
 			Random r = new Random(); 
 			// wait some time until next customer enters
 			try {
-				TimeUnit.MILLISECONDS.sleep( (long) (r.nextGaussian() * sdc + mc) );
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				Thread.sleep( (long) (r.nextGaussian() * sdc + mc) );
+			} catch ( InterruptedException ex ) {
+				ex.printStackTrace();
 			}
 		}
 		

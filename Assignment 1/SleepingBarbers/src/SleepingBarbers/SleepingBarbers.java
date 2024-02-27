@@ -15,7 +15,7 @@ public class SleepingBarbers {
 
 		Customer customer;
 
-		System.out.println("Barber " + id + " waiting to cut hair.");
+		System.out.println( "Barber " + id + " waiting to cut hair." );
 
 		synchronized ( list ) {
 			while ( list.size() == 0 ) {
@@ -25,41 +25,41 @@ public class SleepingBarbers {
 					// waiting for customer to be added
 					list.wait();
 				}
-				catch(InterruptedException iex)
+				catch( InterruptedException ex )
 				{
-					iex.printStackTrace();
+					ex.printStackTrace();
 				}
 			}
 			customer = list.remove( 0 );
-			System.out.println("Barber " + id + " found customer " + customer.getId() + " in the waiting room.");
+			System.out.println( "Barber " + id + " found customer " + customer.getId() + " in the waiting room." );
 		}
 
 		long timeToCut = 0;
-		System.out.println("Cutting hair of  " + customer.getId() );
+		System.out.println( "Cutting hair of  " + customer.getId() );
 		try
 		{    
 			Random r = new Random();
 
 			// making sure length to cut hair has mean md and standard deviation sdh 
-			timeToCut = (long) (r.nextGaussian() * sdh + md);
-			TimeUnit.MILLISECONDS.sleep(timeToCut);
+			timeToCut = ( long ) ( r.nextGaussian() * sdh + md );
+			Thread.sleep( timeToCut );
 		}
 		catch(InterruptedException ex)
 		{
 			ex.printStackTrace();
 		}
 
-		System.out.println( "Customer " + customer.getId() + " had their hair cut in " + timeToCut + " seconds.");
+		System.out.println( "Customer " + customer.getId() + " had their hair cut in " + timeToCut + " seconds." );
 
 	}
 
 	public void addCust ( Customer customer ) {
 
-		System.out.println( "Customer " + customer.getId() + " is entering the shop");
+		System.out.println( "Customer " + customer.getId() + " is entering the shop" );
 
 		synchronized ( list ) {
 			if ( list.size() >= chairs ) {
-				System.out.println( "There are no free seats. Customer " + customer.getId() + " is leaving the shop");
+				System.out.println( "There are no free seats. Customer " + customer.getId() + " is leaving the shop" );
 			} else {
 				
 				// presume all barbers are busy
@@ -77,9 +77,9 @@ public class SleepingBarbers {
 
 	}
 
-	public static void main(String[] args) {		
+	public static void main( String [] args ) {		
 
-		list = new ArrayList<Customer>();
+		list = new ArrayList< Customer >();
 		
 		SleepingBarbers shop = new SleepingBarbers();
 		//get number of CPUs available
@@ -91,16 +91,9 @@ public class SleepingBarbers {
 		final ExecutorService executor = Executors.newFixedThreadPool( numCores );
 		CustomerGenerator generator = new CustomerGenerator( shop );
 		
-		//creating barbers - in this case 4 barbers with 10 waiting chairs
-		Barber[] barbers = new Barber[ numBarbers ];
-		
-		for ( int i = 0; i < numBarbers; i++ ) {
-			barbers[ i ] = new Barber( i, shop );
-		}
-		
 		executor.execute(() -> {
 			for ( int i = 0; i < numBarbers; i++ ) {
-				Thread barberThread = new Thread( barbers[ i ] );
+				Thread barberThread = new Thread( new Barber( i, shop ) );
 				barberThread.start();
 			}
 			Thread generatorThread = new Thread( generator );
