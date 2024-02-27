@@ -8,8 +8,8 @@ public class SleepingBarbers {
 
 	private static ArrayList < Customer > list;
 
-	private static int numBarbers = 4;
-	private static int chairs = 8;
+	private static int numBarbers = 2;
+	private static int chairs = 3;
 
 	public void cutHair ( int id, int mh, int sdh ) {
 
