@@ -6,10 +6,10 @@ import java.util.*;
 
 public class SleepingBarbers {
 
-	static ArrayList <Customer> list;
+	private static ArrayList <Customer> list;
 
-	public final static int numBarbers = 4;
-	public static int chairs = 8;
+	private final static int numBarbers = 4;
+	private final static int chairs = 8;
 
 	public void cutHair ( int id, int md, int sdh ) {
 

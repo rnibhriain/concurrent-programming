@@ -5,10 +5,10 @@ import java.util.Random;
 public class CustomerGenerator implements Runnable {
 
 	// intervals for customer
-	int mc = 500;
-	int sdc = 150;
+	private int mc = 500;
+	private int sdc = 150;
 	
-	SleepingBarbers shop;
+	private SleepingBarbers shop;
 	
 	CustomerGenerator ( SleepingBarbers shop ) {
 		this.shop = shop;

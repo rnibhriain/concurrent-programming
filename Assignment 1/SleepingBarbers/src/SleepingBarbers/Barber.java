@@ -3,11 +3,11 @@ package SleepingBarbers;
 public class Barber implements Runnable {
 
 	private int id;
-	SleepingBarbers shop;
+	private SleepingBarbers shop;
 
 	// Cutting hair time
-	int mh = 5000;
-	int sdh = 275;
+	private int mh = 5000;
+	private int sdh = 275;
 
 	Barber ( int id,  SleepingBarbers shop ) {
 		this.id = id;

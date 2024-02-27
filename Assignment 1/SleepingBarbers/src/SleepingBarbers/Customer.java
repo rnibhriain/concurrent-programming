@@ -3,7 +3,7 @@ package SleepingBarbers;
 public class Customer implements Runnable {
 
 	private int id;
-	SleepingBarbers shop;
+	private SleepingBarbers shop;
 
 	Customer ( int id, SleepingBarbers shop ) {
 		this.id = id;
