@@ -52,6 +52,7 @@ public class SleepingBarbers {
 		}
 
 		System.out.println( "Customer " + customer.getId() + " had their hair cut in " + timeToCut + " seconds." );
+		System.out.println( "Barber " + id + " opens the door for customer " + customer.getId() );
 
 	}
 
@@ -70,6 +71,7 @@ public class SleepingBarbers {
 				
 				// check if there are any waiting barbers
 				if ( list.size() >= 1 ) {
+					System.out.println( "Customer " + customer.getId() + " letting the barber know they are waiting..." );
 					list.notify();
 				}
 				
