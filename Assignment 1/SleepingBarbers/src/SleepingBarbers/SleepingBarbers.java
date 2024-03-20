@@ -12,7 +12,7 @@ public class SleepingBarbers {
 	private static int chairs = 3;
 
 	public void cutHair ( int id, int mh, int sdh ) {
-
+		
 		Customer customer;
 
 		System.out.println( "Barber " + id + " waiting to cut hair." );
