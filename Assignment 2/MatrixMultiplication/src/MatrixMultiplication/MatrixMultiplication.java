@@ -4,6 +4,28 @@ import java.util.concurrent.*;
 
 public class MatrixMultiplication {
 
+	static int MAX_THREADS = 2;
+	static int [][] matA = { { 1, 2 }, { 3, 4} };
+	static int [][] matB = { { 1, 2 }, { 3, 4} };
+	static int[][] matC = new int[2][2];
+
+
+	static class Multiplier implements Runnable {
+		int i;
+
+		Multiplier ( int i ) {
+			this.i = i;
+		}
+
+		public void run () {
+			for ( int j = 0; j < 2; j++ ) {
+				for ( int k = 0; k < 2; k++ ) {
+					matC[ i ][ j ] += matA[ i ][ k ] * matB[ k ][ j ];
+				}
+			}
+		}
+	}
+
 	public static void main( String [] args ) {		
 
 
@@ -11,27 +33,35 @@ public class MatrixMultiplication {
 		int numCores = Runtime.getRuntime().availableProcessors();
 
 		System.out.println( "Number of cores available: " + numCores );
-		
+
 		// starting multicore fixed threads
 		final ExecutorService executor = Executors.newFixedThreadPool( numCores );
-		
-		executor.execute(() -> {
 
-			
+		executor.execute(() -> {
+			for ( int i = 0; i < MAX_THREADS; i++ ) {
+				Thread multiplier = new Thread( new Multiplier( i ) );
+				multiplier.start();
+			}
+
 		});
-		
+
 		executor.shutdown();
-		
+
 		try {
 			if ( executor.awaitTermination( 1, TimeUnit.DAYS ) ) {
+
 			} else {
-			    executor.shutdownNow();
+				executor.shutdownNow();
 			}
 		} catch ( InterruptedException ex ) {
-			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}
 
+		System.out.println("Contents of result matrix");
+		for(int i = 0; i < 2; i++) {
+			System.out.println("[" + matC[ i ][ 0 ] +","+ matC[ i ][ 1 ] +"]" );
+
+		}
 	}
 
 
