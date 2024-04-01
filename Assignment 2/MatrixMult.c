@@ -4,7 +4,7 @@
 #include <omp.h>
 #include <sys/time.h>
 
-#define N 10
+#define N 256
 
 int matA[ N ][ N ];
 int matB[ N ][ N ];
@@ -33,7 +33,8 @@ int main ( int argc, char * argv [ ] )
         }
 	}
 
-    clock_t begin_time = clock();
+    struct timeval t0, t1;
+	gettimeofday(&t0, 0);
 
     /* 
     * private values are i, j, k
@@ -49,7 +50,10 @@ int main ( int argc, char * argv [ ] )
         }
     }
 
-    printf("Parallel time for N is %d: %d\n", N, clock () - begin_time  / CLOCKS_PER_SEC );
+    gettimeofday(&t1, 0);
+	double elapsed = (t1.tv_sec-t0.tv_sec) * 1.0f + (t1.tv_usec - t0.tv_usec) / 1000000.0f;
+
+    printf("Parallel time for N is %d: %f seconds\n", N, elapsed );
 
     printf( "Done!\n" );
 
