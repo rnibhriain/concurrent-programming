@@ -11,6 +11,13 @@ int matB[ N ][ N ];
 int matC[ N ][ N ];
 
 void multMatrix ( int numThreadsPerCore ) {
+    
+
+}
+
+int main ( int argc, char * argv [ ] )
+{
+
     int i, j, k;
 
     for ( i = 0; i < N; i++ )
@@ -20,13 +27,13 @@ void multMatrix ( int numThreadsPerCore ) {
 	}
 
     clock_t begin_time = clock();
-    printf("Hello\n" );
 
     /* 
-    *
+    * private values are i, j, k
     * Shared values are the three matrices A, B, C
+    * num threads are the number of cores by the number of threads entered by user
     */
-    #pragma omp parallel for private( i, j, k ) shared( matA, matB, matC ) num_threads( omp_get_num_procs() * numThreadsPerCore )
+    //#pragma omp parallel for private( i, j, k ) shared( matA, matB, matC ) num_threads( omp_get_num_procs() * atoi( argv[ 1 ] ) )
     for ( i = 0; i < N; ++i ) {
         for ( j = 0; j < N; ++j ) {
             for ( k = 0; k < N; ++k ) {
@@ -35,14 +42,7 @@ void multMatrix ( int numThreadsPerCore ) {
         }
     }
 
-    printf("Parallel time for %d: %d\n", N, clock () - begin_time  / CLOCKS_PER_SEC );
-
-}
-
-int main ( int argc, char * argv [ ] )
-{
-    
-    multMatrix( atoi( argv[ 1 ] ) );
+    printf("Parallel time for N is %d: %d\n", N, clock () - begin_time  / CLOCKS_PER_SEC );
 
     printf( "Done!\n" );
     /*
