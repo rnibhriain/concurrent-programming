@@ -5,9 +5,10 @@ import java.util.concurrent.*;
 public class MatrixMultiplication {
 
 	static int MAX_THREADS = 2;
-	static int [][] matA = { { 1, 2 }, { 3, 4} };
-	static int [][] matB = { { 1, 2 }, { 3, 4} };
-	static int[][] matC = new int[2][2];
+	static final int N = 256;
+	static int [][] matA = new int[N][N];
+	static int [][] matB = new int[N][N];
+	static int[][] matC = new int[N][N];
 
 
 	static class Multiplier implements Runnable {
@@ -37,6 +38,7 @@ public class MatrixMultiplication {
 		// starting multicore fixed threads
 		final ExecutorService executor = Executors.newFixedThreadPool( numCores );
 
+		
 		executor.execute(() -> {
 			for ( int i = 0; i < MAX_THREADS; i++ ) {
 				Thread multiplier = new Thread( new Multiplier( i ) );
