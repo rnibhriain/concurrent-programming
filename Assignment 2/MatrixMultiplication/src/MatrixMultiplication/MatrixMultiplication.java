@@ -69,7 +69,7 @@ public class MatrixMultiplication {
 		System.out.println( "Number of cores available: " + numCores );
 
 		// starting multicore fixed threads
-		final ExecutorService executor = Executors.newFixedThreadPool( numCores );
+		final ExecutorService executor = Executors.newFixedThreadPool( 8 );
 
 		long startTime = System.nanoTime();
 
