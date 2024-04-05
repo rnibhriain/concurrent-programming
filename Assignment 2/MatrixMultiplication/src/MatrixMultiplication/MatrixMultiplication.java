@@ -4,8 +4,8 @@ import java.util.concurrent.*;
 
 public class MatrixMultiplication {
 
-	static int MAX_THREADS = 8;
-	static final int N = 4096;
+	static int MAX_THREADS = 4;
+	static final int N = 100;
 	static int [][] matA = new int[N][N];
 	static int [][] matB = new int[N][N];
 	static int[][] matC = new int[N][N + 1];
@@ -15,7 +15,7 @@ public class MatrixMultiplication {
 		for (int i = 0; i < N; i++ ) {
 			while (mat[i][N] != 1)  {
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(10);
 					// System.out.printf( "Row %d not finished ...\n", i);
 				} catch (Exception e) {
 					System.out.println( "exception sleeping " + e);
@@ -44,7 +44,7 @@ public class MatrixMultiplication {
 			for ( int j = 0; j < N; j++ ) {
 				//mat[ i ][ j ] = i+1+(j+1)*(+1); 
 
-				mat[ i ][ j ] = (int) ( Math.random() * 10 ); //2;
+				mat[ i ][ j ] = (int) ( Math.random() * 10 ); 
 			}
 		}
 	}
@@ -59,9 +59,9 @@ public class MatrixMultiplication {
 		generateMat( matB );
 
 		System.out.print( "\nMatrix A\n" );
-		// printMat( matA );
+		printMat( matA );
 		System.out.print( "\nMatrix B\n" );
-		//printMat( matB );
+		printMat( matB );
 
 		//get number of CPUs available
 		int numCores = Runtime.getRuntime().availableProcessors();
@@ -88,7 +88,7 @@ public class MatrixMultiplication {
 				
 				
 			} else {
-				//executor.shutdownNow();
+				executor.shutdownNow();
 			}
 		} catch ( InterruptedException ex ) {
 			ex.printStackTrace();
@@ -101,7 +101,7 @@ public class MatrixMultiplication {
 		long endTime = System.nanoTime();
 		double timeTaken =  ( double ) ( endTime - startTime ) / 1_000_000_000 ;
 		
-		System.out.printf( "Parallel time for %dx%d: %f seconds\n", N, N, timeTaken );
+		System.out.printf( "Parallel time for N is %d: %f seconds\n", N, timeTaken );
 
 		System.out.println( "Contents of result matrix" );
 		
@@ -124,8 +124,6 @@ class Multiplier implements Runnable {
 		for ( int l = i; l < mats.N; l += mats.MAX_THREADS ) {
 			for ( int j = 0; j < mats.N; j++ ) {
 				for ( int k = 0; k < mats.N; k++ ) {
-
-					//System.out.println( "thread=" + i + ":l=" + l + " (j,k)=(" + j + "," +k+ ")");
 					mats.matC[ l ][ j ] += mats.matA[ l ][ k ] * mats.matB[ k ][ j ];
 				}
 			}
