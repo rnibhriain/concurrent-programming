@@ -1,6 +1,6 @@
-# concurrent-programming
+# Concurrent Programming
 
-## All assignments for module CA670
+## All assignments for module: CA670
 
 ### Assignment One - Sleeping Barbers Problem
 
